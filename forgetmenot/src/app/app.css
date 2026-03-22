@@ -1,0 +1,42 @@
+.title {
+  font-family: 'Sixtyfour', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    'BLED' 0,
+    'SCAN' -53;
+
+  font-size: 32px;
+  animation: flicker 3s infinite;
+  text-align: center;
+  cursor: default;
+  padding: 1rem 0 2rem 0;
+}
+
+.page {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  padding-top: 2rem;
+}
+
+@keyframes flicker {
+  0%,
+  95%,
+  100% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0.4;
+  }
+  97% {
+    opacity: 1;
+  }
+  98% {
+    opacity: 0.2;
+  }
+  99% {
+    opacity: 1;
+  }
+}
