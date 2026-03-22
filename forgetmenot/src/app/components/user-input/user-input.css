@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+}
+
+.user-input {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid black;
+  font-family: 'Sixtyfour';
+  font-size: 18px;
+  outline: none;
+}
