@@ -6,14 +6,16 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouterStore } from '@ngrx/router-store';
+import { NoteEffects } from './components/state/note.effects';
+import { noteReducer } from './components/state/note.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideStore(),
-    provideEffects(),
+    provideStore({ notes: noteReducer }),
+    provideEffects([NoteEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideRouterStore()
-]
+    provideRouterStore(),
+  ],
 };

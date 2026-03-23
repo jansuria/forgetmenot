@@ -4,7 +4,7 @@ import { UserInput } from './components/user-input/user-input';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, UserInput],
+  imports: [UserInput],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
