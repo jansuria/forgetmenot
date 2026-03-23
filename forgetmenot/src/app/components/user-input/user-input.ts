@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NoteCrudFacade } from '../state/note.facade';
 @Component({
   selector: 'app-user-input',
   imports: [FormsModule],
@@ -11,7 +12,9 @@ export class UserInput implements OnInit {
   @Input() x = 0;
   @Input() y = 0;
   public userText: string = '';
+  public userId: string = '1';
   elementRef = inject(ElementRef);
+  noteFacade = inject(NoteCrudFacade);
 
   ngOnInit(): void {
     this.elementRef.nativeElement.style.setProperty('--x', `${this.x}px`);
@@ -20,6 +23,7 @@ export class UserInput implements OnInit {
 
   onSave() {
     console.log(this.userText);
+    this.noteFacade.createNote(this.userId, this.userText);
     this.userText = '';
   }
 }
