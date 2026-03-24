@@ -4,7 +4,7 @@ import { NoteState } from '../models/note.model';
 import * as noteActionTypes from './note.actions';
 
 export const initialState: NoteState = {
-  notes: DUMMY_NOTES,
+  notes: [],
   loading: false,
   error: null,
 };
@@ -19,5 +19,23 @@ export const noteReducer = createReducer(
     ...state,
     loading: false,
     notes: [...state.notes, { userId, note }],
+  })),
+  on(noteActionTypes.getNotesRequest, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(noteActionTypes.getNotesSuccess, (state, { notes }) => ({
+    ...state,
+    loading: false,
+    notes,
+  })),
+  on(noteActionTypes.deleteNoteReqeust, (state) => ({
+    ...state,
+    loading: true,
+  })),
+  on(noteActionTypes.deleteNoteSuccess, (state, { userId, note }) => ({
+    ...state,
+    loading: false,
+    notes: state.notes.filter((notes) => !(notes.userId == userId && notes.note === note)),
   })),
 );
