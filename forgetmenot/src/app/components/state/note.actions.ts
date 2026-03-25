@@ -18,7 +18,7 @@ export const createNoteSuccess = createAction(
   props<{ userId: string; note: string }>(),
 );
 
-export const deleteNoteReqeust = createAction(
+export const deleteNoteRequest = createAction(
   '[Note] Delete Request',
   props<{ userId: string; note: string }>(),
 );

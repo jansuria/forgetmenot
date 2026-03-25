@@ -13,7 +13,7 @@ export class NoteCrudFacade {
   }
 
   public deleteNote(userId: string, note: string) {
-    this.store.dispatch(noteActionTypes.deleteNoteReqeust({ userId, note }));
+    this.store.dispatch(noteActionTypes.deleteNoteRequest({ userId, note }));
   }
 
   public getUserNotes(userId: string) {
