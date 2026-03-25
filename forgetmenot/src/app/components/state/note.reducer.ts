@@ -29,7 +29,7 @@ export const noteReducer = createReducer(
     loading: false,
     notes,
   })),
-  on(noteActionTypes.deleteNoteReqeust, (state) => ({
+  on(noteActionTypes.deleteNoteRequest, (state) => ({
     ...state,
     loading: true,
   })),

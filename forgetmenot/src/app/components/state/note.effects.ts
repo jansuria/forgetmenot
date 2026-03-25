@@ -31,7 +31,7 @@ export class NoteEffects {
 
   deleteNotesEffect$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(noteActionTypes.deleteNoteReqeust),
+      ofType(noteActionTypes.deleteNoteRequest),
       concatMap(({ userId, note }) => {
         this.data = this.data.filter(
           (userData) => !(userData.userId === userId && userData.note === note),
