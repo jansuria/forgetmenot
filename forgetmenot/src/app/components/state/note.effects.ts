@@ -1,20 +1,24 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as noteActionTypes from './note.actions';
-import { concatMap, map, of, switchMap } from 'rxjs';
+import { catchError, concatMap, from, map, of, switchMap } from 'rxjs';
 import { DUMMY_NOTES } from '../../data/user-data';
+import { SupabaseService } from '../../core/services/supabase';
 
 @Injectable()
 export class NoteEffects {
   private readonly actions$ = inject(Actions);
+  private readonly supabaseApi = inject(SupabaseService);
   private data = [...DUMMY_NOTES];
 
   createNoteEffect$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(noteActionTypes.createNoteRequest),
       concatMap(({ userId, note }) => {
-        this.data.push({ userId, note });
-        return of(noteActionTypes.createNoteSuccess({ userId, note }));
+        return from(this.supabaseApi.createNote(userId, note)).pipe(
+          map(() => noteActionTypes.createNoteSuccess({ userId, note })),
+          // catchError((error)=> of(note))
+        );
       }),
     );
   });

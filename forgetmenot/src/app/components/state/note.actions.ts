@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Note } from '../models/note.model';
+import { Note } from '../../shared/models/note.model';
 
 export const getNotesRequest = createAction('[Note] Get user notes', props<{ userId: string }>());
 
