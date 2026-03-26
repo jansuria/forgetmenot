@@ -2,7 +2,7 @@ import { Component, ElementRef, Input, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NoteCrudFacade } from '../state/note.facade';
 import { AsyncPipe } from '@angular/common';
-import { Note } from '../models/note.model';
+import { Note } from '../../shared/models/note.model';
 @Component({
   selector: 'app-user-input',
   imports: [FormsModule, AsyncPipe],
