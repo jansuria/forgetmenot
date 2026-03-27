@@ -21,4 +21,21 @@ export class SupabaseService {
     console.log(data);
     return data;
   }
+
+  async getUserNotes(userId: string) {
+    const { data, error } = await this.supabase.from('notes').select('*').eq('user_id', userId);
+    if (error) throw error;
+    return data.map((note) => ({ userId: note.user_id, note: note.note }));
+  }
+
+  async deleteUserNote(userId: string, note: string) {
+    const { data, error } = await this.supabase
+      .from('notes')
+      .delete()
+      .eq('user_id', userId)
+      .eq('note', note)
+      .select();
+    if (error) throw error;
+    return data;
+  }
 }

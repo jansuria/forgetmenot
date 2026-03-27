@@ -23,12 +23,13 @@ export class NoteEffects {
     );
   });
 
-  getNotesEffect$ = createEffect(() => {
+  getUserNotesEffect$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(noteActionTypes.getNotesRequest),
-      switchMap(({ userId }) => {
-        const userNotes = this.data.filter((notes) => notes.userId === userId);
-        return of(noteActionTypes.getNotesSuccess({ notes: userNotes }));
+      concatMap(({ userId }) => {
+        return from(this.supabaseApi.getUserNotes(userId)).pipe(
+          map((notes) => noteActionTypes.getNotesSuccess({ notes })),
+        );
       }),
     );
   });
@@ -37,10 +38,12 @@ export class NoteEffects {
     return this.actions$.pipe(
       ofType(noteActionTypes.deleteNoteRequest),
       concatMap(({ userId, note }) => {
-        this.data = this.data.filter(
-          (userData) => !(userData.userId === userId && userData.note === note),
+        return from(this.supabaseApi.deleteUserNote(userId, note)).pipe(
+          switchMap(() => [
+            noteActionTypes.deleteNoteSuccess({ userId, note }),
+            noteActionTypes.getNotesRequest({ userId }),
+          ]),
         );
-        return of(noteActionTypes.deleteNoteSuccess({ userId, note }));
       }),
     );
   });

@@ -26,7 +26,7 @@ export const noteReducer = createReducer(
   on(noteActionTypes.getNotesSuccess, (state, { notes }) => ({
     ...state,
     loading: false,
-    notes,
+    notes: notes,
   })),
   on(noteActionTypes.deleteNoteRequest, (state) => ({
     ...state,
@@ -35,6 +35,5 @@ export const noteReducer = createReducer(
   on(noteActionTypes.deleteNoteSuccess, (state, { userId, note }) => ({
     ...state,
     loading: false,
-    notes: state.notes.filter((notes) => !(notes.userId == userId && notes.note === note)),
   })),
 );
