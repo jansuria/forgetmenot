@@ -18,7 +18,6 @@ export const noteReducer = createReducer(
   on(noteActionTypes.createNoteSuccess, (state, { userId, note }) => ({
     ...state,
     loading: false,
-    notes: [...state.notes, { userId, note }],
   })),
   on(noteActionTypes.getNotesRequest, (state) => ({
     ...state,
