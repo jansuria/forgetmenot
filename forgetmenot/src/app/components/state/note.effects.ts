@@ -4,12 +4,13 @@ import * as noteActionTypes from './note.actions';
 import { catchError, concatMap, from, map, of, switchMap, tap } from 'rxjs';
 import { DUMMY_NOTES } from '../../data/user-data';
 import { SupabaseService } from '../../core/services/supabase';
+import { MessageService } from 'primeng/api';
 
 @Injectable()
 export class NoteEffects {
   private readonly actions$ = inject(Actions);
   private readonly supabaseApi = inject(SupabaseService);
-  private data = [...DUMMY_NOTES];
+  private readonly toasterService = inject(MessageService);
 
   createNoteEffect$ = createEffect(() => {
     return this.actions$.pipe(
@@ -22,6 +23,22 @@ export class NoteEffects {
       }),
     );
   });
+
+  createNoteNotificationEffect$ = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(noteActionTypes.createNoteSuccess),
+        tap(({ note }) => {
+          this.toasterService.add({
+            severity: 'success',
+            summary: `Note Added`,
+            detail: `Your note "${note}" was added succesfully`,
+          });
+        }),
+      );
+    },
+    { dispatch: false },
+  );
 
   getUserNotesEffect$ = createEffect(() => {
     return this.actions$.pipe(
@@ -47,4 +64,20 @@ export class NoteEffects {
       }),
     );
   });
+
+  deleteNoteNotificaitonEffec = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(noteActionTypes.deleteNoteSuccess),
+        tap(({ note }) => {
+          this.toasterService.add({
+            severity: 'success',
+            summary: `Note Deleted`,
+            detail: `Your note "${note}" was deleted succesfully`,
+          });
+        }),
+      );
+    },
+    { dispatch: false },
+  );
 }
