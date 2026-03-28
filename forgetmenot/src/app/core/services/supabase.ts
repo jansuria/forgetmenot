@@ -18,7 +18,6 @@ export class SupabaseService {
       .insert({ user_id: userId, note })
       .select();
     if (error) throw error;
-    console.log(data);
     return data;
   }
 

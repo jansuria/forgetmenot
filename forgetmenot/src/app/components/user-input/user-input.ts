@@ -30,7 +30,6 @@ export class UserInput implements OnInit {
   }
 
   deleteUserNote(userNote: Note) {
-    console.log(userNote);
     this.noteFacade.deleteNote(userNote.userId, userNote.note);
   }
 

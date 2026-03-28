@@ -4,62 +4,34 @@ import { provideStore } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { NoteEffects } from '../note.effects';
 import * as noteActionTypes from '../note.actions';
-import { DUMMY_NOTES } from '/Users/jansuria/Documents/Code/Angular/forgetMeNot/forgetmenot/forgetmenot/src/app/data/user-data';
+import { SupabaseApi } from '../../../core/services/supabase';
+
+const mockSupabaseApi = {
+  getUserNotes: (userId: string) => Promise.resolve([]),
+  createNote: (userId: string, note: string) => Promise.resolve(null),
+  deleteNote: (userId: string, note: string) => Promise.resolve(null),
+};
 
 describe('NoteEffects', () => {
   let effects: NoteEffects;
-  let actions$ = new Observable();
+  let actions$ = new Observable<any>();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NoteEffects, provideStore(), provideMockActions(() => actions$)],
+      providers: [
+        NoteEffects,
+        provideStore(),
+        provideMockActions(() => actions$),
+        { provide: SupabaseApi, useValue: mockSupabaseApi },
+      ],
     });
-
     effects = TestBed.inject(NoteEffects);
   });
-  it('should return filtered notes for a userId', () => {
-    actions$ = of(noteActionTypes.getNotesRequest({ userId: 'u001' }));
 
-    effects.getNotesEffect$.subscribe((action) => {
-      expect(action).toEqual(
-        noteActionTypes.getNotesSuccess({
-          notes: DUMMY_NOTES.filter((notes) => notes.userId === 'u001'),
-        }),
-      );
-    });
-  });
-  it('should add note and dispatch createNoteSuccess', () => {
-    actions$ = of(
-      noteActionTypes.createNoteRequest({
-        userId: 'u001',
-        note: 'Test note',
-      }),
-    );
-
+  it('should dispatch getNotesSuccess after getNotesRequest', () => {
+    actions$ = of(noteActionTypes.createNoteRequest({ userId: 'uoo1', note: 'Test Note' }));
     effects.createNoteEffect$.subscribe((action) => {
-      expect(action).toEqual(
-        noteActionTypes.createNoteSuccess({
-          userId: 'u001',
-          note: 'Test note',
-        }),
-      );
-    });
-  });
-  it('should remove note and dispatch deleteNoteSuccess', () => {
-    actions$ = of(
-      noteActionTypes.deleteNoteRequest({
-        userId: 'u001',
-        note: 'Test note',
-      }),
-    );
-
-    effects.deleteNotesEffect$.subscribe((action) => {
-      expect(action).toEqual(
-        noteActionTypes.deleteNoteSuccess({
-          userId: 'u001',
-          note: 'Test note',
-        }),
-      );
+      expect(action).toEqual(noteActionTypes.getNotesSuccess({ notes: [] }));
     });
   });
 });

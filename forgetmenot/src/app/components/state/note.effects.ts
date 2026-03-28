@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as noteActionTypes from './note.actions';
-import { catchError, concatMap, from, map, of, switchMap } from 'rxjs';
+import { catchError, concatMap, from, map, of, switchMap, tap } from 'rxjs';
 import { DUMMY_NOTES } from '../../data/user-data';
 import { SupabaseService } from '../../core/services/supabase';
 
