@@ -5,6 +5,7 @@ import { Observable, of } from 'rxjs';
 import { NoteEffects } from '../note.effects';
 import * as noteActionTypes from '../note.actions';
 import { SupabaseApi } from '../../../core/services/supabase';
+import { MessageService } from 'primeng/api';
 
 const mockSupabaseApi = {
   getUserNotes: (userId: string) => Promise.resolve([]),
@@ -19,6 +20,7 @@ describe('NoteEffects', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MessageService,
         NoteEffects,
         provideStore(),
         provideMockActions(() => actions$),
