@@ -1,0 +1,28 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  (onHide)="onClose()"
+  [header]="isSignUp ? 'Sign Up' : 'Login'"
+>
+  <div class="flex flex-column gap-3">
+    <input pInputText type="email" [(ngModel)]="email" placeholder="Email" />
+
+    <input pInputText type="password" [(ngModel)]="password" placeholder="Password" />
+  </div>
+
+  <ng-template pTemplate="footer">
+    @if (isSignUp) {
+      <p-button label="Sign Up" (onClick)="onSignUp()" />
+    } @else {
+      <p-button label="Login" (onClick)="onLogin()" />
+    }
+
+    <p>
+      {{ isSignUp ? 'Already have an account?' : "Don't have an account?" }}
+      <span (click)="toggleMode()" style="cursor: pointer; color: blue">
+        {{ isSignUp ? 'Login' : 'Sign Up' }}
+      </span>
+    </p>
+  </ng-template>
+</p-dialog>

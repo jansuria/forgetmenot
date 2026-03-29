@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideStore } from '@ngrx/store';
-import { noteReducer } from '../state/note.reducer';
+import { noteReducer } from '../../state/note.reducer';
 
 import { UserInput } from './user-input';
 

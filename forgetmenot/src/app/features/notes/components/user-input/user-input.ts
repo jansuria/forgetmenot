@@ -1,8 +1,11 @@
 import { Component, ElementRef, Input, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NoteCrudFacade } from '../state/note.facade';
+import { NoteCrudFacade } from '../../state/note.facade';
 import { AsyncPipe } from '@angular/common';
-import { Note } from '../../shared/models/note.model';
+import { Note } from '../../../../shared/models/note.model';
+import { Store } from '@ngrx/store';
+import { selectUserId } from '../../../auth/state/auth.selectors';
+
 @Component({
   selector: 'app-user-input',
   imports: [FormsModule, AsyncPipe],
@@ -13,11 +16,12 @@ import { Note } from '../../shared/models/note.model';
 export class UserInput implements OnInit {
   @Input() x = 0;
   @Input() y = 0;
+  private readonly store = inject(Store);
   public userText: string = '';
-  public userId: string = 'u001';
   private noteFacade = inject(NoteCrudFacade);
   notes$ = this.noteFacade.notes$;
   elementRef = inject(ElementRef);
+  userId = this.store.selectSignal(selectUserId);
 
   ngOnInit(): void {
     this.elementRef.nativeElement.style.setProperty('--x', `${this.x}px`);
@@ -25,7 +29,9 @@ export class UserInput implements OnInit {
   }
 
   onNoteSave() {
-    this.noteFacade.createNote(this.userId, this.userText);
+    const userId = this.userId();
+    if (!userId) return;
+    this.noteFacade.createNote(userId, this.userText);
     this.userText = '';
   }
 
@@ -34,6 +40,8 @@ export class UserInput implements OnInit {
   }
 
   getUserNotes() {
-    this.noteFacade.getUserNotes(this.userId);
+    const userId = this.userId();
+    if (!userId) return;
+    this.noteFacade.getUserNotes(userId);
   }
 }

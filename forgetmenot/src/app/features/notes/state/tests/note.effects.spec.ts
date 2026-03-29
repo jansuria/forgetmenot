@@ -4,7 +4,7 @@ import { provideStore } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { NoteEffects } from '../note.effects';
 import * as noteActionTypes from '../note.actions';
-import { SupabaseApi } from '../../../core/services/supabase';
+import { SupabaseApi } from '../../../../core/services/supabase';
 import { MessageService } from 'primeng/api';
 
 const mockSupabaseApi = {
