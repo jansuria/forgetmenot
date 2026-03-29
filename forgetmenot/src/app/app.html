@@ -1,5 +1,8 @@
 <p-toast></p-toast>
 <router-outlet></router-outlet>
+@if (showLoginModal) {
+  <app-login-modal (close)="onModalClose()"></app-login-modal>
+}
 <div class="page" (click)="onClick($event)">
   <h1 class="title" (click)="$event.stopPropagation()">{{ title() }}</h1>
   @if (showInput) {

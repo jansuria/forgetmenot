@@ -8,21 +8,29 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideRouterStore } from '@ngrx/router-store';
-import { NoteEffects } from './components/state/note.effects';
-import { noteReducer } from './components/state/note.reducer';
+import { NoteEffects } from './features/notes/state/note.effects';
+import { noteReducer } from './features/notes/state/note.reducer';
 import { providePrimeNG } from 'primeng/config';
+import { authReducer } from './features/auth/state/auth.reducers';
+import { AuthEffects } from './features/auth/state/auth.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideStore({ notes: noteReducer }),
-    provideEffects([NoteEffects]),
+    provideStore({ notes: noteReducer, auth: authReducer }),
+    provideEffects([NoteEffects, AuthEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideRouterStore(),
     MessageService,
+
     providePrimeNG({
-      theme: {},
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: false,
+        },
+      },
     }),
   ],
 };
