@@ -10,6 +10,8 @@ export const loginSuccess = createAction(
   props<{ userId: string; email: string }>(),
 );
 
+export const loginFailure = createAction('[AUTH] Login Failed', props<{ error: string }>());
+
 export const signUpRequest = createAction(
   '[AUTH] Sign Up Request',
   props<{ email: string; password: string }>(),
@@ -20,7 +22,7 @@ export const signUpSuccess = createAction(
   props<{ userId: string; email: string }>(),
 );
 
-export const loginFailure = createAction('[AUTH] Login Failed', props<{ error: string }>());
+export const signUpFailure = createAction('[AUTH] Sign Up Failed', props<{ error: string }>());
 
 export const logOutRequest = createAction('[AUTH] Logout Request');
 
