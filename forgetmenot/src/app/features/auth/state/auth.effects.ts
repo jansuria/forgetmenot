@@ -20,6 +20,7 @@ export class AuthEffects {
               email: data.user?.email ?? '',
             });
           }),
+          catchError((error) => of(authActionTypes.signUpFailure({ error: error.message }))),
         );
       }),
     );
@@ -31,12 +32,12 @@ export class AuthEffects {
       concatMap(({ email, password }) => {
         return from(this.supabaseApi.signIn(email, password)).pipe(
           map((data) => {
-            if (!data.user.email) throw new Error('No email found');
             return authActionTypes.loginSuccess({
               userId: data.user.id,
-              email: data.user.email,
+              email: data.user.email ?? '',
             });
           }),
+          catchError((error) => of(authActionTypes.loginFailure({ error: error.message }))),
         );
       }),
     );
