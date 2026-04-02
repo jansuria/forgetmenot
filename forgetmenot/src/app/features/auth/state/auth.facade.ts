@@ -13,4 +13,8 @@ export class AuthFacade {
   public userSignUp({ email, password }: { email: string; password: string }) {
     this.store.dispatch(authActionTypes.signUpRequest({ email, password }));
   }
+
+  public userLogOut() {
+    this.store.dispatch(authActionTypes.logOutRequest());
+  }
 }
