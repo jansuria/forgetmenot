@@ -27,3 +27,5 @@ export const signUpFailure = createAction('[AUTH] Sign Up Failed', props<{ error
 export const logOutRequest = createAction('[AUTH] Logout Request');
 
 export const logOutSuccess = createAction('[AUTH] Logout Success');
+
+export const checkSession = createAction('[AUTH] Check Session');
