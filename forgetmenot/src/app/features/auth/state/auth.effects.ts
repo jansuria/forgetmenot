@@ -54,4 +54,22 @@ export class AuthEffects {
       }),
     );
   });
+
+  checkSessionEffect = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(authActionTypes.checkSession),
+      concatMap(() => {
+        return from(this.supabaseApi.getSession()).pipe(
+          map((session) => {
+            if (!session) return authActionTypes.loginFailure({ error: 'No Session' });
+            return authActionTypes.loginSuccess({
+              userId: session.user.id,
+              email: session.user.email ?? '',
+            });
+          }),
+          catchError((error) => of(authActionTypes.loginFailure({ error: error.message }))),
+        );
+      }),
+    );
+  });
 }

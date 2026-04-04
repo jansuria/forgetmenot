@@ -55,6 +55,12 @@ export class SupabaseService {
     if (error) throw error;
   }
 
+  async getSession() {
+    const { data, error } = await this.supabase.auth.getSession();
+    if (error) throw error;
+    return data.session;
+  }
+
   async getCurrentUser() {
     return this.supabase.auth.getUser();
   }
