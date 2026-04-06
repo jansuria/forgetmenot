@@ -4,20 +4,21 @@ import * as noteActionTypes from './note.actions';
 import { catchError, concatMap, from, map, of, switchMap, tap } from 'rxjs';
 import { SupabaseService } from '../../../core/services/supabase';
 import { MessageService } from 'primeng/api';
+import { NotesService } from '../../../core/services/notes.service';
 
 @Injectable()
 export class NoteEffects {
   private readonly actions$ = inject(Actions);
-  private readonly supabaseApi = inject(SupabaseService);
+  private readonly notesApiService = inject(NotesService);
   private readonly toasterService = inject(MessageService);
 
   createNoteEffect$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(noteActionTypes.createNoteRequest),
-      concatMap(({ userId, note }) => {
-        return from(this.supabaseApi.createNote(userId, note)).pipe(
-          map(() => noteActionTypes.createNoteSuccess({ userId, note })),
-          // catchError((error)=> of(note))
+      concatMap(({ note }) => {
+        return this.notesApiService.createNote(note).pipe(
+          map((createdNote) => noteActionTypes.createNoteSuccess({ note: createdNote })),
+          catchError((error) => of(noteActionTypes.createNoteFailure({ error }))),
         );
       }),
     );
@@ -31,7 +32,7 @@ export class NoteEffects {
           this.toasterService.add({
             severity: 'success',
             summary: `Note Added`,
-            detail: `Your note "${note}" was added succesfully`,
+            detail: `Your note "${note.id}" was added succesfully`,
           });
         }),
       );
@@ -42,8 +43,8 @@ export class NoteEffects {
   getUserNotesEffect$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(noteActionTypes.getNotesRequest),
-      concatMap(({ userId }) => {
-        return from(this.supabaseApi.getUserNotes(userId)).pipe(
+      concatMap(() => {
+        return from(this.notesApiService.getNotes()).pipe(
           map((notes) => noteActionTypes.getNotesSuccess({ notes })),
         );
       }),
@@ -53,12 +54,9 @@ export class NoteEffects {
   deleteNotesEffect$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(noteActionTypes.deleteNoteRequest),
-      concatMap(({ userId, note }) => {
-        return from(this.supabaseApi.deleteUserNote(userId, note)).pipe(
-          switchMap(() => [
-            noteActionTypes.deleteNoteSuccess({ userId, note }),
-            noteActionTypes.getNotesRequest({ userId }),
-          ]),
+      concatMap(({ id }) => {
+        return from(this.notesApiService.deleteNote(id)).pipe(
+          switchMap(() => [noteActionTypes.deleteNoteSuccess({ id })]),
         );
       }),
     );
@@ -68,11 +66,11 @@ export class NoteEffects {
     () => {
       return this.actions$.pipe(
         ofType(noteActionTypes.deleteNoteSuccess),
-        tap(({ note }) => {
+        tap(({ id }) => {
           this.toasterService.add({
             severity: 'success',
             summary: `Note Deleted`,
-            detail: `Your note "${note}" was deleted succesfully`,
+            detail: `Your note "${id}" was deleted succesfully`,
           });
         }),
       );

@@ -14,9 +14,15 @@ export const noteReducer = createReducer(
     ...state,
     loading: true,
   })),
-  on(noteActionTypes.createNoteSuccess, (state, { userId, note }) => ({
+  on(noteActionTypes.createNoteSuccess, (state, { note }) => ({
     ...state,
     loading: false,
+    notes: [note, ...state.notes],
+  })),
+  on(noteActionTypes.createNoteFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
   })),
   on(noteActionTypes.getNotesRequest, (state) => ({
     ...state,
@@ -25,14 +31,15 @@ export const noteReducer = createReducer(
   on(noteActionTypes.getNotesSuccess, (state, { notes }) => ({
     ...state,
     loading: false,
-    notes: notes,
+    notes,
   })),
   on(noteActionTypes.deleteNoteRequest, (state) => ({
     ...state,
     loading: true,
   })),
-  on(noteActionTypes.deleteNoteSuccess, (state, { userId, note }) => ({
+  on(noteActionTypes.deleteNoteSuccess, (state, { id }) => ({
     ...state,
     loading: false,
+    notes: state.notes.filter((n) => n.id !== id),
   })),
 );

@@ -21,7 +21,7 @@ export class UserInput implements OnInit {
   private noteFacade = inject(NoteCrudFacade);
   notes$ = this.noteFacade.notes$;
   elementRef = inject(ElementRef);
-  userId = this.store.selectSignal(selectUserId);
+  showNotes = false;
 
   ngOnInit(): void {
     this.elementRef.nativeElement.style.setProperty('--x', `${this.x}px`);
@@ -29,19 +29,17 @@ export class UserInput implements OnInit {
   }
 
   onNoteSave() {
-    const userId = this.userId();
-    if (!userId) return;
-    this.noteFacade.createNote(userId, this.userText);
+    if (!this.userText.trim()) return;
+    this.noteFacade.createNote(this.userText);
     this.userText = '';
   }
 
   deleteUserNote(userNote: Note) {
-    this.noteFacade.deleteNote(userNote.userId, userNote.note);
+    this.noteFacade.deleteNote(userNote.id);
   }
 
   getUserNotes() {
-    const userId = this.userId();
-    if (!userId) return;
-    this.noteFacade.getUserNotes(userId);
+    this.showNotes = true;
+    this.noteFacade.getUserNotes();
   }
 }
