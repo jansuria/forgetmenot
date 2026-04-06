@@ -8,15 +8,15 @@ export class NoteCrudFacade {
   private readonly store = inject(Store);
   public notes$ = this.store.select(selectUserNotes);
 
-  public createNote(userId: string, note: string) {
-    this.store.dispatch(noteActionTypes.createNoteRequest({ userId, note }));
+  public createNote(note: string) {
+    this.store.dispatch(noteActionTypes.createNoteRequest({ note }));
   }
 
-  public deleteNote(userId: string, note: string) {
-    this.store.dispatch(noteActionTypes.deleteNoteRequest({ userId, note }));
+  public deleteNote(id: number) {
+    this.store.dispatch(noteActionTypes.deleteNoteRequest({ id }));
   }
 
-  public getUserNotes(userId: string) {
-    this.store.dispatch(noteActionTypes.getNotesRequest({ userId }));
+  public getUserNotes() {
+    this.store.dispatch(noteActionTypes.getNotesRequest());
   }
 }

@@ -1,6 +1,7 @@
 export interface Note {
-  userId: string;
-  note: string;
+  id: number;
+  userNote: string;
+  createdAt: string;
 }
 
 export interface NoteState {

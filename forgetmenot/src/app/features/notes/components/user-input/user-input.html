@@ -7,9 +7,11 @@
 />
 <button (click)="getUserNotes()">Show your notes!</button>
 
-<ul>
-  @for (note of notes$ | async; track note.userId) {
-    <li>{{ note.note }}</li>
-    <button (click)="deleteUserNote(note)">delete</button>
-  }
-</ul>
+@if (showNotes) {
+  <ul>
+    @for (note of notes$ | async; track note.id) {
+      <li>{{ note.userNote }}</li>
+      <button (click)="deleteUserNote(note)">delete</button>
+    }
+  </ul>
+}
