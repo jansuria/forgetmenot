@@ -36,12 +36,12 @@ export class UserInput implements OnInit {
     this.userText = '';
   }
 
-  // deleteUserNote(userNote: Note) {
-  //   this.noteFacade.deleteNote(userNote.id);
-  // }
+  deleteUserNote(userNote: Note) {
+    this.noteFacade.deleteNote(userNote.id);
+  }
 
-  // getUserNotes() {
-  //   this.showNotes = true;
-  //   this.noteFacade.getUserNotes();
-  // }
+  getUserNotes() {
+    this.showNotes = true;
+    this.noteFacade.getUserNotes();
+  }
 }
