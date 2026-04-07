@@ -13,13 +13,17 @@ import { noteReducer } from './features/notes/state/note.reducer';
 import { providePrimeNG } from 'primeng/config';
 import { authReducer } from './features/auth/state/auth.reducers';
 import { AuthEffects } from './features/auth/state/auth.effects';
+import { CommandEffects } from './features/commands/state/command.effects';
+import { commandReducer } from './features/commands/state/command.reducers';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideStore({ notes: noteReducer, auth: authReducer }),
-    provideEffects([NoteEffects, AuthEffects]),
+    provideHttpClient(),
+    provideStore({ notes: noteReducer, auth: authReducer, commands: commandReducer }),
+    provideEffects([NoteEffects, AuthEffects, CommandEffects]),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideRouterStore(),
     MessageService,

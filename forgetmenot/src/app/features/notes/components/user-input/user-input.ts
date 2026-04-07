@@ -5,6 +5,7 @@ import { AsyncPipe } from '@angular/common';
 import { Note } from '../../../../shared/models/note.model';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../auth/state/auth.selectors';
+import { CommandFacade } from '../../../commands/state/command.facade';
 
 @Component({
   selector: 'app-user-input',
@@ -19,6 +20,7 @@ export class UserInput implements OnInit {
   private readonly store = inject(Store);
   public userText: string = '';
   private noteFacade = inject(NoteCrudFacade);
+  private commandFacade = inject(CommandFacade);
   notes$ = this.noteFacade.notes$;
   elementRef = inject(ElementRef);
   showNotes = false;
@@ -30,16 +32,16 @@ export class UserInput implements OnInit {
 
   onNoteSave() {
     if (!this.userText.trim()) return;
-    this.noteFacade.createNote(this.userText);
+    this.commandFacade.commandDispatch(this.userText);
     this.userText = '';
   }
 
-  deleteUserNote(userNote: Note) {
-    this.noteFacade.deleteNote(userNote.id);
-  }
+  // deleteUserNote(userNote: Note) {
+  //   this.noteFacade.deleteNote(userNote.id);
+  // }
 
-  getUserNotes() {
-    this.showNotes = true;
-    this.noteFacade.getUserNotes();
-  }
+  // getUserNotes() {
+  //   this.showNotes = true;
+  //   this.noteFacade.getUserNotes();
+  // }
 }
