@@ -7,7 +7,7 @@
 />
 <button (click)="getUserNotes()">Show your notes!</button>
 
-@if (showNotes) {
+@if ((notes$ | async)?.length) {
   <ul>
     @for (note of notes$ | async; track note.id) {
       <li>{{ note.userNote }}</li>

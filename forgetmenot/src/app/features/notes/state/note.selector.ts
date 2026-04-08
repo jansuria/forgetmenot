@@ -1,4 +1,4 @@
-import { createFeature, createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { NoteState } from '../../../shared/models/note.model';
 
 export const selectNoteState = createFeatureSelector<NoteState>('notes');
