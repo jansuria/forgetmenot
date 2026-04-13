@@ -5,7 +5,6 @@
   (keydown.enter)="onNoteSave()"
   autofocus
 />
-<button (click)="getUserNotes()">Show your notes!</button>
 
 @if ((notes$ | async)?.length) {
   <ul>
