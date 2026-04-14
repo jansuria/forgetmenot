@@ -19,4 +19,8 @@ export class NoteCrudFacade {
   public getUserNotes() {
     this.store.dispatch(noteActionTypes.getNotesRequest());
   }
+
+  public disableGrid() {
+    this.store.dispatch(noteActionTypes.disableGridRequest())
+  }
 }

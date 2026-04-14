@@ -1,16 +1,17 @@
 <input
   class="user-input"
   [(ngModel)]="userText"
-  placeholder="write a note..."
+  placeholder="write a command..."
   (keydown.enter)="onNoteSave()"
   autofocus
 />
 
-@if ((notes$ | async)?.length) {
+@if (((notes$ | async)?.length) && gridViewable() == true) {
   <ul>
     @for (note of notes$ | async; track note.id) {
       <li>{{ note.userNote }}</li>
       <button (click)="deleteUserNote(note)">delete</button>
     }
   </ul>
+  <button (click)="dontShowGrid()">remove grid</button>
 }

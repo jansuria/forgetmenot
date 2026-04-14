@@ -7,5 +7,6 @@ export interface Note {
 export interface NoteState {
   notes: Note[];
   loading: boolean;
+  gridViewable: boolean,
   error: unknown;
 }
