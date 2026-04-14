@@ -23,3 +23,5 @@ export const deleteNoteSuccess = createAction(
   '[Note] Delete Request Success',
   props<{ id: number }>(),
 );
+
+export const disableGridRequest = createAction('[TEST]');

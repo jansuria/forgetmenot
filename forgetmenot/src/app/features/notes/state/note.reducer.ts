@@ -5,6 +5,7 @@ import * as noteActionTypes from './note.actions';
 export const initialState: NoteState = {
   notes: [],
   loading: false,
+  gridViewable: false,
   error: null,
 };
 
@@ -31,6 +32,7 @@ export const noteReducer = createReducer(
   on(noteActionTypes.getNotesSuccess, (state, { notes }) => ({
     ...state,
     loading: false,
+    gridViewable: true,
     notes,
   })),
   on(noteActionTypes.deleteNoteRequest, (state) => ({
@@ -42,4 +44,8 @@ export const noteReducer = createReducer(
     loading: false,
     notes: state.notes.filter((n) => n.id !== id),
   })),
+  on(noteActionTypes.disableGridRequest, (state) => ({
+    ...state,
+    gridViewable:false
+  }))
 );
