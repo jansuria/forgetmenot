@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { selectIsLoggedIn } from './features/auth/state/auth.selectors';
 import { LoginModal } from './features/auth/components/login-modal/login-modal';
 import * as authActionTypes from '../app/features/auth/state/auth.actions';
+import { selectCommandLoading } from './features/commands/state/command.selectors';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ export class App implements OnInit {
 
   showLoginModal = false;
   isLoggedIn = this.store.selectSignal(selectIsLoggedIn);
+  isLoading = this.store.selectSignal(selectCommandLoading);
 
   showInput: boolean = false;
   inputY: number = 0;
