@@ -4,7 +4,6 @@ import { NoteCrudFacade } from '../../state/note.facade';
 import { AsyncPipe } from '@angular/common';
 import { Note } from '../../../../shared/models/note.model';
 import { Store } from '@ngrx/store';
-import { selectUserId } from '../../../auth/state/auth.selectors';
 import { CommandFacade } from '../../../commands/state/command.facade';
 import { selectIsGridViewable } from '../../state/note.selector';
 
@@ -25,7 +24,7 @@ export class UserInput implements OnInit {
   notes$ = this.noteFacade.notes$;
   elementRef = inject(ElementRef);
   showNotes = false;
-  gridViewable = this.store.selectSignal(selectIsGridViewable)
+  gridViewable = this.store.selectSignal(selectIsGridViewable);
 
   ngOnInit(): void {
     this.elementRef.nativeElement.style.setProperty('--x', `${this.x}px`);
@@ -43,8 +42,8 @@ export class UserInput implements OnInit {
     this.noteFacade.deleteNote(userNote.id);
   }
 
-  dontShowGrid(){
+  dontShowGrid() {
     this.noteFacade.disableGrid();
-    console.log(this.gridViewable())
+    console.log(this.gridViewable());
   }
 }
