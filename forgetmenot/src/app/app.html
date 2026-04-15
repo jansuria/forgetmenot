@@ -6,6 +6,9 @@
 @if (isLoggedIn()) {
   <button (click)="onLogOut()">Logout</button>
 }
+@if (isLoading()) {
+  <p-progress-spinner></p-progress-spinner>
+}
 <div class="page" (click)="onClick($event)">
   <h1 class="title" (click)="$event.stopPropagation()">{{ title() }}</h1>
   @if (showInput) {

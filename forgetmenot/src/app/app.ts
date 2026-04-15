@@ -8,10 +8,11 @@ import { selectIsLoggedIn } from './features/auth/state/auth.selectors';
 import { LoginModal } from './features/auth/components/login-modal/login-modal';
 import * as authActionTypes from '../app/features/auth/state/auth.actions';
 import { selectCommandLoading } from './features/commands/state/command.selectors';
+import { ProgressSpinnerModule, ProgressSpinner } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-root',
-  imports: [UserInput, Toast, RouterOutlet, LoginModal],
+  imports: [UserInput, Toast, RouterOutlet, LoginModal, ProgressSpinner],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
