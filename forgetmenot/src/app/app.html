@@ -7,11 +7,15 @@
   <button (click)="onLogOut()">Logout</button>
 }
 @if (isLoading()) {
-  <p-progress-spinner></p-progress-spinner>
+  <div class="loader-overlay">
+    <div class="label">
+      <span class="label-text">dispatching...</span><span class="cursor"></span>
+    </div>
+  </div>
 }
 <div class="page" (click)="onClick($event)">
   <h1 class="title" (click)="$event.stopPropagation()">{{ title() }}</h1>
-  @if (showInput) {
+  @if (showInput && !isLoading()) {
     <app-user-input [x]="inputX" [y]="inputY"></app-user-input>
   }
 </div>
