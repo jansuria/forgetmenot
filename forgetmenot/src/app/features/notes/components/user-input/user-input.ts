@@ -1,4 +1,13 @@
-import { Component, ElementRef, Input, OnInit, inject } from '@angular/core';
+import {
+  afterNextRender,
+  afterRenderEffect,
+  Component,
+  effect,
+  ElementRef,
+  inject,
+  input,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NoteCrudFacade } from '../../state/note.facade';
 import { AsyncPipe } from '@angular/common';
@@ -13,24 +22,29 @@ import { selectIsGridViewable } from '../../state/note.selector';
   templateUrl: './user-input.html',
   styleUrl: './user-input.css',
   standalone: true,
+  host: {
+    '[style.left.px]': 'x()',
+    '[style.top.px]': 'y()',
+    '(click)': '$event.stopPropagation()',
+  },
 })
-export class UserInput implements OnInit {
-  @Input() x = 0;
-  @Input() y = 0;
-  private readonly store = inject(Store);
-  public userText: string = '';
-  private noteFacade = inject(NoteCrudFacade);
-  private commandFacade = inject(CommandFacade);
-  notes$ = this.noteFacade.notes$;
-  elementRef = inject(ElementRef);
-  showNotes = false;
-  gridViewable = this.store.selectSignal(selectIsGridViewable);
+export class UserInput {
+  readonly x = input.required<number>();
+  readonly y = input.required<number>();
+  private readonly inputEl = viewChild.required<ElementRef<HTMLInputElement>>('inputEl');
+  private readonly refocusOnMove = effect(() => {
+    this.x();
+    this.y();
+    this.inputEl()?.nativeElement.focus();
+  });
 
-  ngOnInit(): void {
-    this.elementRef.nativeElement.style.setProperty('--x', `${this.x}px`);
-    this.elementRef.nativeElement.style.setProperty('--y', `${this.y}px`);
-    console.log(this.gridViewable());
-  }
+  private readonly store = inject(Store);
+  private readonly noteFacade = inject(NoteCrudFacade);
+  private readonly commandFacade = inject(CommandFacade);
+
+  userText = '';
+  notes$ = this.noteFacade.notes$;
+  gridViewable = this.store.selectSignal(selectIsGridViewable);
 
   onNoteSave() {
     if (!this.userText.trim()) return;
@@ -44,6 +58,5 @@ export class UserInput implements OnInit {
 
   dontShowGrid() {
     this.noteFacade.disableGrid();
-    console.log(this.gridViewable());
   }
 }

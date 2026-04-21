@@ -1,11 +1,6 @@
 :host {
-  display: flex;
-
-  align-items: center;
-  width: 100%;
   position: absolute;
-  left: var(--x);
-  top: var(--y);
+  transform: translate(-50%, -150%);
 }
 
 .user-input {
