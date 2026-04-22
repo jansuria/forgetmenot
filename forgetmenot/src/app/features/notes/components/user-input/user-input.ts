@@ -1,13 +1,4 @@
-import {
-  afterNextRender,
-  afterRenderEffect,
-  Component,
-  effect,
-  ElementRef,
-  inject,
-  input,
-  viewChild,
-} from '@angular/core';
+import { Component, effect, ElementRef, inject, input, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NoteCrudFacade } from '../../state/note.facade';
 import { AsyncPipe } from '@angular/common';
@@ -37,14 +28,10 @@ export class UserInput {
     this.y();
     this.inputEl()?.nativeElement.focus();
   });
-
-  private readonly store = inject(Store);
   private readonly noteFacade = inject(NoteCrudFacade);
   private readonly commandFacade = inject(CommandFacade);
 
   userText = '';
-  notes$ = this.noteFacade.notes$;
-  gridViewable = this.store.selectSignal(selectIsGridViewable);
 
   onNoteSave() {
     if (!this.userText.trim()) return;

@@ -5,13 +5,3 @@
   placeholder="write a note..."
   (keydown.enter)="onNoteSave()"
 />
-
-@if ((notes$ | async)?.length && gridViewable()) {
-  <ul>
-    @for (note of notes$ | async; track note.id) {
-      <li>{{ note.userNote }}</li>
-      <button (click)="deleteUserNote(note)">delete</button>
-    }
-  </ul>
-  <button (click)="dontShowGrid()">remove grid</button>
-}

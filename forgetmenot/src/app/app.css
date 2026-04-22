@@ -14,6 +14,26 @@
   padding: 1rem 0 2rem 0;
 }
 
+.logout-button {
+  border: none;
+  height: fit-content;
+  width: fit-content;
+  padding: 0;
+  background-color: transparent;
+  font-family: 'Sixtyfour', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    'BLED' 0,
+    'SCAN' -53;
+
+  font-size: 16px;
+  animation: flicker 3s infinite;
+  text-align: center;
+  cursor: default;
+}
+
 .loader-overlay {
   position: fixed;
   inset: 0;
