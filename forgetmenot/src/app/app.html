@@ -3,9 +3,7 @@
 @if (showLoginModal) {
   <app-login-modal (close)="onModalClose()"></app-login-modal>
 }
-@if (isLoggedIn()) {
-  <button (click)="onLogOut()">Logout</button>
-}
+
 @if (isLoading()) {
   <div class="loader-overlay">
     <div class="label">
@@ -18,4 +16,8 @@
   @if (showInput && !isLoading()) {
     <app-user-input [x]="inputX" [y]="inputY"></app-user-input>
   }
+  @if (isLoggedIn()) {
+    <button class="logout-button" (click)="onLogOut(); $event.stopPropagation()">Logout</button>
+  }
 </div>
+<app-grid></app-grid>

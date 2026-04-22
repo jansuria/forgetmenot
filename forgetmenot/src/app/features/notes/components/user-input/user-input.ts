@@ -1,13 +1,4 @@
-import {
-  afterNextRender,
-  afterRenderEffect,
-  Component,
-  effect,
-  ElementRef,
-  inject,
-  input,
-  viewChild,
-} from '@angular/core';
+import { Component, effect, ElementRef, inject, input, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NoteCrudFacade } from '../../state/note.facade';
 import { AsyncPipe } from '@angular/common';

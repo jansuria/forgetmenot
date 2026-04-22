@@ -6,7 +6,7 @@
   (keydown.enter)="onNoteSave()"
 />
 
-@if ((notes$ | async)?.length && gridViewable()) {
+<!-- @if ((notes$ | async)?.length && gridViewable()) {
   <ul>
     @for (note of notes$ | async; track note.id) {
       <li>{{ note.userNote }}</li>
@@ -14,4 +14,4 @@
     }
   </ul>
   <button (click)="dontShowGrid()">remove grid</button>
-}
+} -->
